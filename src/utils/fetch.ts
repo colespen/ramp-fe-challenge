@@ -1,5 +1,6 @@
 import {
   getEmployees,
+  getTransactions,
   getTransactionsPaginated,
   getTransactionsByEmployee,
   setTransactionApproval,
@@ -31,6 +32,15 @@ export function fakeFetch<TData, TParams extends object = object>(
             mockApiLogger({ data: { endpoint, params, result } })
             resolve(result)
           }, mockTimeout)
+          break
+
+        case "transactions":
+          result = getTransactions() as unknown as TData
+
+          setTimeout(() => {
+            mockApiLogger({ data: { endpoint, params, result } })
+            resolve(result)
+          }, mockTimeout * 2)
           break
 
         case "paginatedTransactions":
@@ -121,6 +131,7 @@ function getTimeout() {
 
 export type RegisteredEndpoints =
   | "employees"
+  | "transactions"
   | "paginatedTransactions"
   | "transactionsByEmployee"
   | "setTransactionApproval"
