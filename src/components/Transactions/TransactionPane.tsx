@@ -30,6 +30,7 @@ export const TransactionPane: TransactionPaneComponent = ({
 
           setApproved(newValue)
         }}
+        onClick={() => setApproved((prev) => !prev)}
       />
     </div>
   )

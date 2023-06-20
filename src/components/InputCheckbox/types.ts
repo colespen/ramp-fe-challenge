@@ -4,6 +4,7 @@ type InputCheckboxProps = {
   id: string | number
   checked?: boolean
   onChange: (newValue: boolean) => void
+  onClick: () => void;
   disabled?: boolean
 }
 
