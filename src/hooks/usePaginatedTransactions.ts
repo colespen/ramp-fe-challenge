@@ -22,10 +22,10 @@ export function usePaginatedTransactions(): PaginatedTransactionsResult {
         return response
       }
 
-      return { data: response.data, nextPage: response.nextPage }
+      console.log("previousResponse:", previousResponse)
+      // spread prev and curr paginated data
+      return { data: [...previousResponse.data, ...response.data], nextPage: response.nextPage }
     })
-
-    console.log("response:", response)
   }, [fetchWithCache, paginatedTransactions])
 
   const invalidateData = useCallback(() => {
