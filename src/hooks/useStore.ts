@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react"
 
-const Store = new Map<string | number, unknown>()
+const store = new Map<string, boolean>()
 
 /**
- * takes id and initialState and wraps useState to persist and update state
+ * @param {string} id
+ * @param {boolean} initialState
+ * @description custom hook that wraps useState to persist and update state
+ * @returns tuple containing the current state value and a function to update the state.
  *  */
-const useStore = <S>(id: string | number, initialState: S | (() => S)) => {
-  const storeState = Store.has(id) ? (Store.get(id) as S) : undefined
+const useStore = (id: string, initialState: boolean) => {
+  const storeState = store.get(id)
 
-  const [state, dispatch] = useState<S>(storeState ?? initialState)
+  const [state, setState] = useState<boolean>(storeState ?? initialState)
 
   useEffect(() => {
-    Store.set(id, state)
+    store.set(id, state)
   }, [state, id])
 
-  return [state, dispatch] as const
+  return [state, setState] as const
 }
 
 export { useStore }

@@ -19,8 +19,6 @@ export function App() {
     () => paginatedTransactions?.data ?? transactionsByEmployee ?? null,
     [paginatedTransactions, transactionsByEmployee]
   )
-  console.log(transactions)
-  console.log("t.approved:", transactions?.map(t => t.approved))
 
   const loadAllTransactions = useCallback(async () => {
     setIsLoading(true)

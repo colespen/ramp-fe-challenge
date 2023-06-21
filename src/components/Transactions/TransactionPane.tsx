@@ -7,13 +7,9 @@ export const TransactionPane: TransactionPaneComponent = ({
   loading,
   setTransactionApproval: consumerSetTransactionApproval,
 }) => {
-  // const [approved, setApproved] = useState<boolean>(transaction.approved)
   const [approved, setApproved] = useStore(transaction.id, transaction.approved)
 
-  console.log("approved:", approved)
-
   const handleOnChange = async (newValue: boolean) => {
-    console.log("newValue:", newValue)
     await consumerSetTransactionApproval({
       transactionId: transaction.id,
       newValue,

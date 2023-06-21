@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { useCustomFetch } from "src/hooks/useCustomFetch"
 import { SetTransactionApprovalParams } from "src/utils/types"
 import { TransactionPane } from "./TransactionPane"
@@ -6,10 +6,14 @@ import { SetTransactionApprovalFunction, TransactionsComponent } from "./types"
 
 export const Transactions: TransactionsComponent = ({ transactions }) => {
   const { fetchWithoutCache, loading } = useCustomFetch()
+  const bottomEl = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    bottomEl.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
   const setTransactionApproval = useCallback<SetTransactionApprovalFunction>(
     async ({ transactionId, newValue }) => {
-      
       await fetchWithoutCache<void, SetTransactionApprovalParams>("setTransactionApproval", {
         transactionId,
         value: newValue,
@@ -17,6 +21,10 @@ export const Transactions: TransactionsComponent = ({ transactions }) => {
     },
     [fetchWithoutCache]
   )
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [transactions])
 
   if (transactions === null) {
     return <div className="RampLoading--container">Loading...</div>
@@ -32,6 +40,7 @@ export const Transactions: TransactionsComponent = ({ transactions }) => {
           setTransactionApproval={setTransactionApproval}
         />
       ))}
+      <div ref={bottomEl}></div>
     </div>
   )
 }

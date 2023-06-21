@@ -57,7 +57,6 @@ a {
   grid-template-columns: 1fr;
   gap: 0.75rem;
   width: 100%;
-  /* added height */
   height: 100%;
 }
 
@@ -98,7 +97,6 @@ hr.RampBreak--l {
   width: 100%;
   max-width: 700px;
   border: 1px solid var(--color-darker-shade);
-  /* margin-top: 0.5rem; */
   max-height: 16rem;
   overflow: auto;
   box-shadow: rgb(0 0 0 / 10%) 0px 0px 1px, rgb(0 0 0 / 13%) 0px 4px 8px;
@@ -126,7 +124,6 @@ hr.RampBreak--l {
 .RampInputCheckbox--container {
   display: flex;
   position: relative;
-  /* remove relative? */
 }
 
 .RampInputCheckbox--label {
@@ -142,9 +139,6 @@ hr.RampBreak--l {
   cursor: pointer;
 }
 
-/* .RampInputCheckbox--label-disabled {
-  cursor: progress;
-} */
 
 .RampInputCheckbox--label-checked:before {
   content: " ";
@@ -155,7 +149,6 @@ hr.RampBreak--l {
 }
 
 .RampInputCheckbox--input {
-  /* display: none; */
   opacity: 0;
   width: 1.25rem;
   height: 1.25rem;
