@@ -23,7 +23,6 @@ export function InputSelect<TItem>({
       if (selectedItem === null) {
         return
       }
-
       consumerOnChange(selectedItem)
       setSelectedValue(selectedItem)
     },

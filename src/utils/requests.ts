@@ -17,8 +17,6 @@ const data: { employees: Employee[]; transactions: Transaction[] } = {
 
 export const getEmployees = (): Employee[] => data.employees
 
-// export const getTransactions = (): Transaction[] => data.transactions
-
 export const getTransactionsPaginated = ({
   page,
 }: PaginatedRequestParams): PaginatedResponse<Transaction[]> => {

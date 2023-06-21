@@ -21,8 +21,6 @@ export function usePaginatedTransactions(): PaginatedTransactionsResult {
       if (response === null || previousResponse === null) {
         return response
       }
-
-      console.log("previousResponse:", previousResponse)
       // spread prev and curr paginated data
       return { data: [...previousResponse.data, ...response.data], nextPage: response.nextPage }
     })

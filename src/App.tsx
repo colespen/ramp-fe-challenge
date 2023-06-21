@@ -12,24 +12,23 @@ export function App() {
   const { data: employees, ...employeeUtils } = useEmployees()
   const { data: paginatedTransactions, ...paginatedTransactionsUtils } = usePaginatedTransactions()
   const { data: transactionsByEmployee, ...transactionsByEmployeeUtils } = useTransactionsByEmployee()
-  const [isLoading, setIsLoading] = useState(false)
-  const [employeeId, setEmployeeId] = useState("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [employeeId, setEmployeeId] = useState<string>("")
 
   const transactions = useMemo(
     () => paginatedTransactions?.data ?? transactionsByEmployee ?? null,
     [paginatedTransactions, transactionsByEmployee]
   )
-
-  console.log("transactions:", transactions)
+  console.log("transactions:", transactions?.map(t => t.approved))
 
   const loadAllTransactions = useCallback(async () => {
     setIsLoading(true)
     transactionsByEmployeeUtils.invalidateData()
 
     await employeeUtils.fetchAll()
-    await paginatedTransactionsUtils.fetchAll()
-
+    setEmployeeId("")
     setIsLoading(false)
+    await paginatedTransactionsUtils.fetchAll()
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
 
   const loadTransactionsByEmployee = useCallback(
@@ -46,6 +45,18 @@ export function App() {
       loadAllTransactions()
     }
   }, [employeeUtils.loading, employees, loadAllTransactions])
+
+  const handleOnChange = async (newValue: Employee | null) => {
+    if (newValue === null) {
+      return
+    }
+    if (newValue.id) {
+      await loadTransactionsByEmployee(newValue.id)
+    }
+    if (newValue.lastName === "Employees" && !newValue.id) {
+      loadAllTransactions()
+    }
+  }
 
   return (
     <Fragment>
@@ -64,18 +75,7 @@ export function App() {
             value: item.id,
             label: `${item.firstName} ${item.lastName}`,
           })}
-          onChange={async (newValue) => {
-            if (newValue === null) {
-              return
-            }
-            if (newValue.id) {
-              await loadTransactionsByEmployee(newValue.id)
-            }
-            if (!newValue.id && newValue.lastName === "Employees") {
-              setEmployeeId("")
-              loadAllTransactions()
-            }
-          }}
+          onChange={handleOnChange}
         />
 
         <div className="RampBreak--l" />
