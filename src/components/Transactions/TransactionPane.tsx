@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react"
 import { InputCheckbox } from "../InputCheckbox"
 import { TransactionPaneComponent } from "./types"
+import { useStore } from "src/hooks/useStore"
 
 export const TransactionPane: TransactionPaneComponent = ({
   transaction,
   loading,
   setTransactionApproval: consumerSetTransactionApproval,
 }) => {
-  const [approved, setApproved] = useState<boolean>(transaction.approved)
+  // const [approved, setApproved] = useState<boolean>(transaction.approved)
+  const [approved, setApproved] = useStore(transaction.id, transaction.approved)
 
-  // useEffect(() => {
-  //   setApproved(transaction.approved)
-  // }, [transaction.approved])
+  console.log("approved:", approved)
 
   const handleOnChange = async (newValue: boolean) => {
+    console.log("newValue:", newValue)
     await consumerSetTransactionApproval({
       transactionId: transaction.id,
       newValue,
@@ -36,7 +36,6 @@ export const TransactionPane: TransactionPaneComponent = ({
         checked={approved}
         disabled={loading}
         onChange={handleOnChange}
-        onClick={() => setApproved(!approved)}
       />
     </div>
   )

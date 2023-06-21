@@ -58,7 +58,7 @@ a {
   gap: 0.75rem;
   width: 100%;
   /* added height */
-  height: 100%; 
+  height: 100%;
 }
 
 .RampBreak--xs {
@@ -125,12 +125,15 @@ hr.RampBreak--l {
 
 .RampInputCheckbox--container {
   display: flex;
+  position: relative;
+  /* remove relative? */
 }
 
 .RampInputCheckbox--label {
   border: 1px solid var(--color-light-shade);
   background-color: var(--color-lighter-shade);
   display: flex;
+  position: absolute;
   justify-content: center;
   align-items: center;
   padding: 0.125rem;
@@ -139,9 +142,9 @@ hr.RampBreak--l {
   cursor: pointer;
 }
 
-.RampInputCheckbox--label-disabled {
+/* .RampInputCheckbox--label-disabled {
   cursor: progress;
-}
+} */
 
 .RampInputCheckbox--label-checked:before {
   content: " ";
@@ -152,7 +155,19 @@ hr.RampBreak--l {
 }
 
 .RampInputCheckbox--input {
-  display: none;
+  /* display: none; */
+  opacity: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.RampInputCheckbox--input-checked {
+  cursor: pointer;
+}
+.RampInputCheckbox--input-disabled {
+  cursor: progress;
 }
 
 .RampButton {
